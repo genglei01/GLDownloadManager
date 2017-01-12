@@ -1,6 +1,0 @@
-version: "Apple Swift version 3.0.1 (swiftlang-800.0.58.6 clang-800.0.42.1)"
-options: "73cb3b9233fc7bcd2ba10e9ff37925db"
-build_time: [537544812, 349677000]
-inputs:
-  "/Users/leogeng/Projects/GLDownloadManager/GLDownloadManager/GLDownloadModel.swift": [537544811, 0]
-  "/Users/leogeng/Projects/GLDownloadManager/GLDownloadManager/GLDownloadManager.swift": !dirty [537544812, 0]
