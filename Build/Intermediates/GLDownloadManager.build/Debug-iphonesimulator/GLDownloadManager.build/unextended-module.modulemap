@@ -1,0 +1,10 @@
+framework module GLDownloadManager {
+  umbrella header "GLDownloadManager.h"
+
+  export *
+  module * { export * }
+}
+
+module GLDownloadManager.__Swift {
+    exclude header "GLDownloadManager-Swift.h"
+}

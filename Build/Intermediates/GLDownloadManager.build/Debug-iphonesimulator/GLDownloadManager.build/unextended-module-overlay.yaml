@@ -1,0 +1,13 @@
+{
+  'version': 0,
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': '/Users/leogeng/Projects/GLDownloadManager/Build/Products/Debug-iphonesimulator/GLDownloadManager.framework/Modules'
+    'contents': [{
+      'type': 'file',
+      'name': 'module.modulemap',
+      'external-contents': '/Users/leogeng/Projects/GLDownloadManager/Build/Intermediates/GLDownloadManager.build/Debug-iphonesimulator/GLDownloadManager.build/unextended-module.modulemap',
+    }]
+  }]
+}
