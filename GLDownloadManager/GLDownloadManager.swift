@@ -33,12 +33,10 @@ class GLDownloadManager: NSObject {
         self.downloadModels = [GLDownloadModel]()
     }
     
-    func  startDownload(url:String,dest:String,materialId:String)  {
+    func  startDownload(fileName:String,fileUrl:String,destPath:String)  {
+        let task = self.session.downloadTask(with: URL(string: fileUrl)!)
         
-        
-        let task = self.session.downloadTask(with: URL(string: url)!)
-        
-        let model = GLDownloadModel(dest: dest,materialId:materialId, task: task)
+        let model = GLDownloadModel(fileName: fileName, fileUrl: fileUrl, destPath: destPath, sessionTask: task)
         self.downloadModels.append(model)
         
         task.resume()
@@ -46,7 +44,7 @@ class GLDownloadManager: NSObject {
     
     func cancel()  {
         downloadModels.forEach(){ model in
-            model.task.cancel()
+            model.sessionTask.cancel()
         }
     }
 }
@@ -75,22 +73,20 @@ extension GLDownloadManager:URLSessionDownloadDelegate{
         
         do {
             var isDir = ObjCBool(false)
-            let exist = FileManager.default.fileExists(atPath: model.dest, isDirectory: &isDir)
+            let exist = FileManager.default.fileExists(atPath: model.destPath, isDirectory: &isDir)
             
             if !exist {
-                try FileManager.default.createDirectory(atPath: model.dest, withIntermediateDirectories: false, attributes: nil)
+                try FileManager.default.createDirectory(atPath: model.destPath, withIntermediateDirectories: false, attributes: nil)
             }else if !isDir.boolValue{
-                try FileManager.default.removeItem(atPath: model.dest)
-                try FileManager.default.createDirectory(atPath: model.dest, withIntermediateDirectories: false, attributes: nil)
+                try FileManager.default.removeItem(atPath: model.destPath)
+                try FileManager.default.createDirectory(atPath: model.destPath, withIntermediateDirectories: false, attributes: nil)
             }
             
-            let path = URL(fileURLWithPath: model.dest).appendingPathComponent(model.materialId).appendingPathExtension("zip").path
+            let path = URL(fileURLWithPath: model.destPath).appendingPathComponent(model.fileName).appendingPathExtension("zip").path
             
             if FileManager.default.fileExists(atPath: path) {
                 try FileManager.default.removeItem(atPath: path)
             }
-            
-            model.dest = path
             
             try FileManager.default.moveItem(atPath: location.path, toPath: path)
             self.delegate?.didFinshDownload(downloadModel: model)
@@ -103,7 +99,7 @@ extension GLDownloadManager:URLSessionDownloadDelegate{
     
     private func getDownloadModel(task:URLSessionDownloadTask)->GLDownloadModel?{
         for (index,model) in self.downloadModels.enumerated() {
-            if task.isEqual(model.task) {
+            if task.isEqual(model.destPath) {
                 self.downloadModels.remove(at: index)
                 return model
             }

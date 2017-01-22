@@ -9,13 +9,15 @@
 import Foundation
 
 class GLDownloadModel{
-    var dest:String
-    var task:URLSessionDownloadTask
-    var materialId:String
+    var fileName:String
+    var fileUrl:String
+    var destPath:String
+    var sessionTask:URLSessionDownloadTask
     
-    init(dest:String,materialId:String,task:URLSessionDownloadTask) {
-        self.dest = dest
-        self.task = task
-        self.materialId = materialId
+    init(fileName:String,fileUrl:String,destPath:String,sessionTask:URLSessionDownloadTask) {
+        self.fileName = fileName
+        self.fileUrl = fileUrl
+        self.destPath = destPath
+        self.sessionTask = sessionTask
     }
 }
